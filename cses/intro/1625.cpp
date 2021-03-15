@@ -152,11 +152,43 @@ char dd[4] = {'U', 'L', 'D', 'R'};
 // ------------------------------------------------------
 
 ll n, t;
+const int N = 7;
+bool vis[7][7];
+string s;
+ll res;
+
+bool good(int x, int y) {
+	return !(x < 0 || x >= N || y < 0 || y >= N || vis[x][y]);
+}
+
+void dfs(int x, int y, int k) {
+	if (x == N-1 && y == 0) {
+		if (k == N*N - 1) {
+			res++;
+		}
+		return;
+	}
+	vis[x][y] = true;
+	F0R(d, 4) {
+		if (s[k] == dd[d] || s[k] == '?') {
+			if (good(x+dx[d], y+dy[d])) {
+				if(!(!good(x+2*dx[d], y+2*dy[d]) && 
+					good(x+dx[d]+dy[d], y+dy[d]+dx[d]) && 
+					good(x+dx[d]-dy[d], y+dy[d]-dx[d]))
+				)
+					dfs(x+dx[d], y+dy[d], k+1);
+			}
+		}
+	}
+	vis[x][y] = false;
+}
 
 int main(){
 	ios::sync_with_stdio(0);
     cin.tie(0);
     cout.tie(0);
     cerr.tie(0);
-	read(n);
+	read(s);
+	dfs(0, 0, 0);
+	print(res);
 }

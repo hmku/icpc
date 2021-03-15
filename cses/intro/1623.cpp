@@ -5,7 +5,6 @@ using namespace std;
 typedef double db;
 typedef long long ll;
 typedef long double ld;
-typedef unsigned long long ull;
 typedef vector<int> vi;
 typedef pair<int, int> pi;
 
@@ -159,4 +158,23 @@ int main(){
     cout.tie(0);
     cerr.tie(0);
 	read(n);
+	ll p[n];
+	ll s = 0;
+	F0R(i, n) {
+		read(p[i]);
+		s += p[i];
+	}
+	ll mcs = 0;
+	for (ll i = 0; i < 1<<n; i++) {
+		ll cs = 0;
+		F0R(j, n) {
+			if (i >> j & 1) {
+				cs += p[j];
+			}
+		}
+		if (cs <= s/2) {
+			mcs = max(mcs, cs);
+		}
+	}
+	print(s - 2*mcs);
 }

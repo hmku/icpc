@@ -151,12 +151,30 @@ char dd[4] = {'U', 'L', 'D', 'R'};
 
 // ------------------------------------------------------
 
-ll n, t;
+ull n, t;
+
+void solve() {
+	ull sm = 0;
+	ull d = 1;
+	while (sm + 9 * d * (ull) pow(10, d-1) < n) {
+		sm += 9 * d * (ull) pow(10, d-1);
+		d++;
+	}
+	ull k = n - sm - 1;
+	ull num = (ull) pow(10, d-1) + k / d;
+	ull i = (ull) pow(10, d - (k % d) - 1);
+	// print(d, k, num, i);
+	print((num / i) % 10);
+}
 
 int main(){
 	ios::sync_with_stdio(0);
     cin.tie(0);
     cout.tie(0);
     cerr.tie(0);
-	read(n);
+	read(t);
+	F0R(i, t) {
+		read(n);
+		solve();
+	}
 }

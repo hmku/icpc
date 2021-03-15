@@ -5,7 +5,6 @@ using namespace std;
 typedef double db;
 typedef long long ll;
 typedef long double ld;
-typedef unsigned long long ull;
 typedef vector<int> vi;
 typedef pair<int, int> pi;
 
@@ -151,7 +150,7 @@ char dd[4] = {'U', 'L', 'D', 'R'};
 
 // ------------------------------------------------------
 
-ll n, t;
+ll n, t, x, y, k, s;
 
 int main(){
 	ios::sync_with_stdio(0);
@@ -159,4 +158,9 @@ int main(){
     cout.tie(0);
     cerr.tie(0);
 	read(n);
+	x = 1;
+	F0R(i, n) {
+		x = (x * 2) % MOD;
+	}
+	print(x);
 }

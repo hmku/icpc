@@ -5,7 +5,6 @@ using namespace std;
 typedef double db;
 typedef long long ll;
 typedef long double ld;
-typedef unsigned long long ull;
 typedef vector<int> vi;
 typedef pair<int, int> pi;
 
@@ -151,7 +150,7 @@ char dd[4] = {'U', 'L', 'D', 'R'};
 
 // ------------------------------------------------------
 
-ll n, t;
+ll n, t, x, y, k;
 
 int main(){
 	ios::sync_with_stdio(0);
@@ -159,4 +158,20 @@ int main(){
     cout.tie(0);
     cerr.tie(0);
 	read(n);
+	vt<bool> a;
+	F0R(i, n) {
+		a.pb(0);
+	}
+	F0R(i, pow(2, n)) {
+		if (i == 0) {
+			print(a);
+		}
+		else {
+			k = i & (~(i-1)); // largest power of 2 that divides i
+			int j = (int) log2(k);
+			a[(n-1-j)] = !a[(n-1-j)];
+			print(a);
+		}
+	}
+
 }

@@ -5,7 +5,6 @@ using namespace std;
 typedef double db;
 typedef long long ll;
 typedef long double ld;
-typedef unsigned long long ull;
 typedef vector<int> vi;
 typedef pair<int, int> pi;
 
@@ -150,13 +149,51 @@ int dy[4] = {0, -1, 0, 1};
 char dd[4] = {'U', 'L', 'D', 'R'};
 
 // ------------------------------------------------------
-
-ll n, t;
+const int N = 10e3;
+int n, r;
+char ac[N][N];
+int a[N][N];
+ll dp[N][N];
+ll dpp[N][N];
 
 int main(){
-	ios::sync_with_stdio(0);
-    cin.tie(0);
-    cout.tie(0);
-    cerr.tie(0);
-	read(n);
+	cin >> n;
+    F0R(i, n) {
+        read(ac[i]);
+    }
+    F0R(i, n) {
+        F0R(j, n) {
+            a[i][j] = ac[i][j] - '0';
+        }
+    }
+    F0R(i, n) {
+        F0R(j, n) {
+            if (i == 0 && j == 0)
+                dp[i][j] = a[i][j];
+            else if (i == 0) {
+                dp[i][j] = dp[i][j-1] + a[i][j];
+            }
+            else if (j == 0) {
+                dp[i][j] = dp[i-1][j] + a[i][j];
+            }
+            else {
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + a[i][j];
+            }
+        }
+    }
+    F0R(i, n) {
+        F0R(j, n) {
+            if (i == 0 && j == 0)
+                dpp[i][j] = 1;
+            else {
+                if (i > 0 && dp[i][j] == dp[i-1][j] + a[i][j]) {
+                    dpp[i][j] = (dpp[i][j] + dpp[i-1][j]) % MOD;
+                }
+                if (j > 0 && dp[i][j] == dp[i][j-1] + a[i][j]) {
+                    dpp[i][j] = (dpp[i][j] + dpp[i][j-1]) % MOD;
+                }
+            }
+        }
+    }
+    print(dp[n-1][n-1], dpp[n-1][n-1] % MOD);
 }

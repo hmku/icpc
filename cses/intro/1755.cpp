@@ -5,7 +5,6 @@ using namespace std;
 typedef double db;
 typedef long long ll;
 typedef long double ld;
-typedef unsigned long long ull;
 typedef vector<int> vi;
 typedef pair<int, int> pi;
 
@@ -151,12 +150,44 @@ char dd[4] = {'U', 'L', 'D', 'R'};
 
 // ------------------------------------------------------
 
-ll n, t;
+ll n, t, x, y, k;
+ll a[255];
 
 int main(){
 	ios::sync_with_stdio(0);
     cin.tie(0);
     cout.tie(0);
     cerr.tie(0);
-	read(n);
+	string s;
+	read(s);
+	F0R(i, len(s)) {
+		a[(int) s[i]]++;
+	}
+	bool flag = false;
+	vi res;
+	F0R(i, 255) {
+		if (a[i] % 2 != 0) {
+			if (flag) {
+				print("NO SOLUTION");
+				return 0;
+			}
+			else {
+				flag = true;
+				k = i;
+			}
+		}
+		F0R(j, a[i] / 2) {
+			res.pb(i);
+		}
+	}
+	F0R(i, len(res)) {
+		cout << (char) res[i];
+	}
+	if (flag) {
+		cout << (char) k;
+	}
+	F0Rd(i, len(res)) {
+		cout << (char) res[i];
+	}
+	cout << endl;
 }

@@ -5,7 +5,6 @@ using namespace std;
 typedef double db;
 typedef long long ll;
 typedef long double ld;
-typedef unsigned long long ull;
 typedef vector<int> vi;
 typedef pair<int, int> pi;
 
@@ -151,12 +150,45 @@ char dd[4] = {'U', 'L', 'D', 'R'};
 
 // ------------------------------------------------------
 
-ll n, t;
+const int N = 20;
+const int C = 26;
+int n, r;
+string a;
+string b;
+int dp[N][N][C];
 
 int main(){
 	ios::sync_with_stdio(0);
     cin.tie(0);
     cout.tie(0);
     cerr.tie(0);
+
 	read(n);
+	read(a);
+	read(b);
+
+    F0R(i, n+1) {
+        F0R(j, n+1) {
+            F0R(c, C) {
+                if (i == 0 || j == 0) {
+                    dp[i][j][c] = 0;
+                    continue;
+                }
+                dp[i][j][c] = max(dp[i-1][j][c], dp[i][j-1][c]);
+                char cc = (char) (c+65);
+                if (a[i] == b[j] && a[i] == cc) {
+					// print(i-1, j-1, dp[i-1][j-1][c]);
+					F0R(p, C) {
+						if (p != c) {
+							dp[i][j][c] = max(dp[i][j][c], dp[i-1][j-1][p] + 1);
+						}
+					}
+                }   
+            }
+        }
+    }
+    F0R(c, C) {
+		r = max(r, dp[n][n][c]);
+	}
+	print(r);
 }

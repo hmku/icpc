@@ -26,41 +26,38 @@ typedef pair<int, int> pi;
 
 const unsigned int MOD = 1e9 + 7;
 const ll INF = 1e18;
-const int mxN = 2e5;
+const int mxN = 2e5 + 1;
 
 
 int dx[4] = {-1, 0, 1, 0};
 int dy[4] = {0, -1, 0, 1};
 char dd[4] = {'U', 'L', 'D', 'R'};
 
-int n, x[mxN], dp[mxN];
 
-int main(){
-	cin >> n;
-	F0R(i, n){
-		cin >> x[i];
-		dp[i] = i-1;
-		while (dp[i] != -1  && x[dp[i]] >= x[i]){
-			dp[i] = dp[dp[i]];
-		}
-		cout << dp[i] + 1 << " ";
+int n, w, d, c, u, ans;
+int dp[mxN], curr[mxN], capacity[mxN];
+vi adj[mxN];
+
+void dfs(int u){
+	for (auto& a : adj[u]){
+		dp[a] = capacity[a] - curr[a] + max(0, dp[u] - capacity[a]);
+		ans = min(ans, dp[a]);
+		dfs(a);
 	}
 }
 
+int main(){
+	cin >> n >> w;
+	F0R(i, n){
+		cin >> d >> c >> u;
+		adj[d].pb(i+1);	
+		curr[i+1] = u;
+		capacity[i+1] = c;
+	}
+	capacity[0] = w;
+	ans = w;
+	dp[0] = w;
+	dfs(0);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	cout << ans << endl;
+}

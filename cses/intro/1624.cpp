@@ -5,7 +5,6 @@ using namespace std;
 typedef double db;
 typedef long long ll;
 typedef long double ld;
-typedef unsigned long long ull;
 typedef vector<int> vi;
 typedef pair<int, int> pi;
 
@@ -152,11 +151,44 @@ char dd[4] = {'U', 'L', 'D', 'R'};
 // ------------------------------------------------------
 
 ll n, t;
+char grid[8][8];
+
+int check(vi pos) {
+	bool d1[16] = {};
+	bool d2[16] = {};
+	F0R(i, 8) {
+		if (grid[i][pos[i]] == '*') {
+			return 0;
+		}
+		if (d1[pos[i] - i+8]) {
+			return 0;
+		}
+		else {
+			d1[pos[i] - i+8] = true;
+		}
+		if (d2[pos[i] + i]) {
+			return 0;
+		}
+		else {
+			d2[pos[i] + i] = true;
+		}
+	}
+	return 1;
+}
 
 int main(){
 	ios::sync_with_stdio(0);
     cin.tie(0);
     cout.tie(0);
     cerr.tie(0);
-	read(n);
+	vi pos;
+	ll ct = 0;
+	F0R(i, 8) {
+		read(grid[i]);
+		pos.pb(i);
+	}
+	do {
+		ct += check(pos);
+	} while(next_permutation(all(pos)));
+	print(ct);
 }

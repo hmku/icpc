@@ -5,7 +5,6 @@ using namespace std;
 typedef double db;
 typedef long long ll;
 typedef long double ld;
-typedef unsigned long long ull;
 typedef vector<int> vi;
 typedef pair<int, int> pi;
 
@@ -151,12 +150,67 @@ char dd[4] = {'U', 'L', 'D', 'R'};
 
 // ------------------------------------------------------
 
-ll n, t;
+int n, p;
+int inds[7];
+int a[6][7];
+
+int dr[4] = {0, 1, 1, -1};
+int dc[4] = {1, 0, 1, 1};
+
+int cc(int p, int r, int c, int dr, int dc) {
+    int ct = 0;
+    int mc = 0;
+    int i = r-3*dr;
+    int j = c-3*dc;
+    while (i <= r+3*dr && j <= c+3*dc) {
+        if (i >= 0 && i < 6 && j >= 0 && j < 7 && a[i][j] == p) {
+            ct++;
+        }
+        else {
+            mc = max(ct, mc);
+            ct = 0;
+        }
+        i += dr;
+        j += dc;
+    }
+    mc = max(ct, mc);
+    return mc;
+}
+
+int cw(int p, int r, int c) {
+    for (int d = 0; d < 4; d++) {
+        int mc = cc(p, r, c, dr[d], dc[d]);
+        if (mc >= 4) {
+            return p;
+        }
+    }
+    return 0;
+}
 
 int main(){
-	ios::sync_with_stdio(0);
-    cin.tie(0);
-    cout.tie(0);
-    cerr.tie(0);
-	read(n);
+    p = -1;
+    int t = 1;
+	for (int i = 0; i < 42; i++) {
+        cin >> n;
+        int c = n-1;
+        int r = inds[c];
+        inds[c]++;
+        a[r][c] = p;
+
+        // print(r, c);
+
+        int w = cw(p, r, c);
+        if (w == -1) {
+            print("RED", t);
+            return 0;
+        }
+        else if (w == 1) {
+            print("YELLOW", t);
+            return 0;
+        }
+
+        p = -1 * p;
+        t++;
+    }
+    print("DRAW");
 }
