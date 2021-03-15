@@ -7,7 +7,9 @@ typedef long long ll;
 typedef long double ld;
 typedef unsigned long long ull;
 typedef vector<int> vi;
+typedef vector<ll> vl;
 typedef pair<int, int> pi;
+typedef pair<ll, ll> pl;
 
 // arrays
 #define ar array
